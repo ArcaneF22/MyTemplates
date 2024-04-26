@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import Papa from 'papaparse'; //INSTALL { npm i papaparse }
-import axios from 'axios'; //INSTALL { npm i axios }
 
 export const HelloWorld = () => {
     const [csvData, setCsvData] = useState([]);
