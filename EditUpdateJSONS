@@ -1,0 +1,17 @@
+const [JSONConverted,setJSONConverted] = useState([]);
+
+const returnedDateClosed =(val,index)=> {
+
+          // WAY A
+          const newData = [...JSONConverted]; // Create a copy
+          newData[index] = val; // Update the specific element
+          setJSONConverted(newData);
+
+          // WAY B
+          setJSONConverted(prevData => {
+                const e = [...prevData];
+                e[index]['DATECLOSED'] = val;
+                return e;
+          });
+
+}
