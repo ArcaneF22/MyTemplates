@@ -1,0 +1,14 @@
+        const x = dataReceived.FXRATES.find( (e) => e.provider == "open.er-api.com" && e.datestamped == 'June 22, 2024' );
+        if(x){
+          const z = JSON.parse(x.rates);
+          const arrKey = Object.keys(z);
+          const arrVal = Object.values(z);
+
+          const combinedArray = arrKey.map((value, index) => ({
+            Currency: value,
+            Value: arrVal[index] || null,
+          }));
+
+        //setlistofRates(dataRates)
+        console.log(combinedArray)
+        }
