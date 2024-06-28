@@ -14,4 +14,12 @@ const returnedDateClosed =(val,index)=> {
                 return e;
           });
 
+async () => {
+    const getDataA = async () => { /* do stuff */ };
+    const getDataB = async () => { /* do stuff */ };
+
+    await getDataA();
+    await getDataB();
+  })();
+
 }
