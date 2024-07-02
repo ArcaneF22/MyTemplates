@@ -1,0 +1,13 @@
+// create an array from array
+        const dataClubs = dataReceived.CLUBS.map(i => {
+            return {
+                    label:                        i.name,
+                    value:                        i.name,
+                    idd:                          i.idd,
+                    percent:                      i.percent,
+                    appID:                        i.appID,
+                    appName:                      i.appName,
+                    };
+                    })
+// get unique values only
+const uniqueArray = [...new Map(dataClubs.map(item => [item.value, item])).values()];
