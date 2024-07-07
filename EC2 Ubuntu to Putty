@@ -1,0 +1,24 @@
+Go to AWS Connect to instance
+ >> SSH Client
+Copy EXAMPLE: ssh -i "Poker12345.pem" ubuntu@ec2-18-234-110-215.compute-1.amazonaws.com
+Copy and paste to putty Hostname or IP Address: 
+ec2-18-234-110-215.compute-1.amazonaws.com
+>> Connection >> Data 
+Auto-login username the username in the EXAMPLE: ubuntu
+>> Connection >> SSH >> Auth >> Credentials >> Browse the ppk file
+click OPEN then Accept
+Done!
+
+Open PUTTY
+
+
+
+// change mysql password
+sudo mysql -u root -p
+use mysql;
+ALTER USER 'root'@'localhost' IDENTIFIED BY 'your_new_password'; 
+//Poker67890
+FLUSH PRIVILEGES;
+
+
+
