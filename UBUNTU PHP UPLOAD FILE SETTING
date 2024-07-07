@@ -1,0 +1,39 @@
+sudo usermod -a -G apache ec2-user
+sudo chown -R ec2-user:apache /var/www
+sudo chmod 2775 /var/www && find /var/www -type d -exec sudo chmod 2775 {} \;
+
+find /var/www -type f -exec sudo chmod 0664 {} \;
+
+cd /var/www/html/pokerapp/files
+// OTHER
+ sudo chmod -R 775 /var/www/html/pokerapp/files
+sudo chown -R www-data:www-data /var/www/html/pokerapp/files
+sudo chown -R root:www /var/www/html/pokerapp/files
+sudo chmod 2775 /var/www/html/pokerapp/files
+ find /var/www/html/pokerapp/ -type f -exec sudo chmod 0664 {} +
+ find /var/www/html/pokerapp/ -type d -exec sudo chmod 0664 {} +
+
+
+sudo chmod 2775 /var/www/html/pokerapp
+find /var/www/html/pokerapp -type d -exec sudo chmod 2775 {} \
+
+
+<?php
+include '../conx.php';
+
+if (!empty($_FILES) && isset($_FILES['image'])) {
+
+    $targetDir = '/var/www/html/pokerapp/files/';
+    $targetFile = $targetDir . basename($_FILES['image']['name']);
+    
+    if (move_uploaded_file($_FILES['image']['tmp_name'], $targetFile)) {
+        echo "File uploaded successfully!";
+    } else {
+        echo "Error uploading file.";
+    }
+
+
+} else {
+    echo "None";
+}
+?>
