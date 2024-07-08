@@ -5,11 +5,13 @@ sudo systemctl enable cron
 
 >> GO TO
 sudo vi /var/spool/cron/crontabs/root
+or
+>> TO EDIT CRON TAB
+crontab -e
 
 >> COPY & PASTE THIS TO ROOT FILE
 
 0 1 * * * /usr/bin/php /var/www/html/poker/upsert/auto_fx.php
 0 23 * * * /usr/bin/php /var/www/html/poker/upsert/auto_fx.php
 
->> TO EDIt CRON TAB
-crontab -e
+
