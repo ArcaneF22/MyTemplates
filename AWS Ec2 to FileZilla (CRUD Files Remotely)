@@ -9,4 +9,9 @@ Logon Type: Key File
 User: Ubuntu
 KeyFile: PEM or PPK File
 >> Connect
+
+sudo su
+sudo chmod -R 777 /var/www
+// Be careful your making it editable globally!
+
 Done!
