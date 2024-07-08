@@ -11,3 +11,11 @@ sudo apt install php libapache2-mod-php
 sudo apt install php-cli
 sudo apt install php-mysql
 sudo systemctl restart apache2.service 
+
+sudo chown -R ubuntu /var/www/html/poker
+sudo chgrp -R www-data /var/www/html
+sudo gpasswd -a ubuntu www-data
+
+//add web site
+https://www.youtube.com/watch?v=QOSa42I0XNk&t=11s
+https://askubuntu.com/questions/767504/permissions-problems-with-var-www-html-and-my-own-home-directory-for-a-website
