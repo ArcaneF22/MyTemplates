@@ -39,7 +39,7 @@ bind-address            = 0.0.0.0
 mysqlx-bind-address     = 0.0.0.0
 
 
-// CONNECT TO MYSQL remoTELY
+// CONNECT TO MYSQL REMOTELY / PERMISSIONSN
  cd /etc/mysql/mysql.conf.d/
 ls
 sudo nano mysqld.cnf
@@ -54,3 +54,11 @@ CREATE USER 'PokerOverseerer'@'%' IDENTIFIED WITH mysql_native_password BY 'Poke
 GRANT ALL PRIVILEGES ON * . * TO 'PokerOverseerer'@'%';
 FLUSH PRIVILEGES;
 exit
+
+//ENABLE MYSQL TO BE ACCESSED BY PHP
+cd /etc/php/{PHP_VERSION}/cli/php.ini
+>> Uncomment / removev smicolon of
+“extension=mysqli” or “extension=php_mysqli“
+sudo service apache2 restart
+
+
