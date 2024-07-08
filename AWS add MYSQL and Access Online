@@ -61,4 +61,7 @@ cd /etc/php/{PHP_VERSION}/cli/php.ini
 “extension=mysqli” or “extension=php_mysqli“
 sudo service apache2 restart
 
-
+//OPEN SSL
+cd /etc/php/{PHP_VERSION}/cli/php.ini
+>> Uncomment / remove smicolon of
+extension=openssl.dll.
