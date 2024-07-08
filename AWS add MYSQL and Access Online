@@ -56,7 +56,7 @@ FLUSH PRIVILEGES;
 exit
 
 //ENABLE MYSQL TO BE ACCESSED BY PHP
-cd /etc/php/{PHP_VERSION}/cli/php.ini
+cd /etc/php/8.3/cli/php.ini
 >> Uncomment / removev smicolon of
 “extension=mysqli” or “extension=php_mysqli“
 sudo service apache2 restart
@@ -65,3 +65,6 @@ sudo service apache2 restart
 cd /etc/php/{PHP_VERSION}/cli/php.ini
 >> Uncomment / remove smicolon of
 extension=openssl.dll.
+
+
+sudo openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout pokerserver.key -out pokerserver.crt
