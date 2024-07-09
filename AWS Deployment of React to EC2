@@ -1,0 +1,20 @@
+Link: https://www.youtube.com/watch?v=TqBnNVxfFyg&t=893s
+
+
+** ROUTE 53
+
+
+** UBUNTU
+sudo vi /etc/apache2/sites-available/your_app_name.conf
+
+>> copy paste this
+
+<VirtualHost *:80>
+	ServerName your_app_domain.pro
+	ServerAlias sample.your_app_domain.pro
+	DocumentRoot /var/www/html
+</VirtualHost>
+
+
+a2ensite your_app_name
+
