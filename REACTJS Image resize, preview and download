@@ -1,0 +1,85 @@
+import Resizer from "react-image-file-resizer";
+
+export default function imagePage() {
+  
+    const [selectedFile, setSelectedFile] = useState(null);
+  
+    const imagetoRESIZE = async (file) => {
+      return new Promise((resolve) => {
+        Resizer.imageFileResizer(
+          file,
+          350, // maxWidth
+          350, // maxHeight
+          "JPEG", // compressFormat
+          100, // quality
+          0, // rotation
+          (uri) => {
+            resolve(uri);
+          },
+          "base64" // outputType
+        );
+      });
+    };
+  
+    const imagetoFILE = (fileData,fileTitle) => {
+        const byteString = atob(fileData.split(',')[1]);
+        const mimeType = fileData.split(',')[0].split(':')[1].split(';')[0];
+        const arrayBuffer = new ArrayBuffer(byteString.length);
+        const intArray = new Uint8Array(arrayBuffer);
+        
+        for (let i = 0; i < byteString.length; i++) {
+          intArray[i] = byteString.charCodeAt(i);
+        }
+
+        const blob = new Blob([arrayBuffer], { type: mimeType });
+        
+        const originalFileName = fileTitle+'.jpg'; // Adjust filename as needed
+        const originalFileType = blob.type; // Retrieve type from Blob
+    
+        const newFile = new File([blob], originalFileName, { type: originalFileType });
+
+        return newFile;
+    };
+  
+    const handleFileChanges = async (event) => {
+      const file = event.target.files[0];
+      const resizedFile = await imagetoRESIZE(file);
+      setSelectedFile(resizedFile);
+      setUploadError(null);
+      console.log(resizedFile);
+    };
+  
+    const handleUpload = async () => {
+
+      if (!selectedFile) {
+        setUploadError('Please select an image to upload');
+        return;
+      }
+  
+      try {
+        const newFile = imagetoFILE(selectedFile,'titled');
+        console.log(newFile);
+      } catch (error) {
+        console.error('Upload failed:', error);
+      } finally {
+        console.log('Upload success:');
+      }
+    };
+
+return ( 
+    <div>
+  
+      <input type="file" accept='.jpeg, .jpg, .png' onChange={handleFileChanges} />
+  
+      <button onClick={handleUpload} disabled={isUploading}>
+        {isUploading ? 'Uploading...' : 'Upload Image'}
+      </button>
+  
+    <img src={selectedFile} alt="Preview" />
+  
+    </div>
+
+
+)
+  
+}
