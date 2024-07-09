@@ -1,2 +1,22 @@
 //CHANGE USER
 sudo chown -R www-data var/www/html
+
+//TRANSFER OWNERSHIP
+sudo chown www-data var/www/html
+
+//STEPS
+>> create a group
+sudo addgroup group_name
+>> add users
+
+
+
+>> view users inside a group
+grep group_name /etc/group
+
+>> view user and group ownership of folder
+stat -c "%U %G" /var/www/html/files
+
+>> view folder and file ownerships list
+ls -l /var/www/html/files
+
