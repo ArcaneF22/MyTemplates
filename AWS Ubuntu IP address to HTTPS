@@ -1,0 +1,6 @@
+sudo su -
+sudo apt install ufw
+sudo ufw allow from [IP_ADdress] to any port 22 proto tcp
+sudo ufw allow http
+sudo ufw allow https
+sudo ufw enable
