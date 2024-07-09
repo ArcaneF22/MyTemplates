@@ -4,10 +4,19 @@ sudo chown -R www-data var/www/html
 //TRANSFER OWNERSHIP
 sudo chown www-data var/www/html
 
-//STEPS
+//STEPS TO ADD PERMISSION TO MULTIPLE USERS / GROUP
 >> create a group
 sudo addgroup group_name
 >> add users
+group_name user_name
+>> create folder in the directory
+>> add group permission to folder and sub folders
+sudo chown -R :group_name /var/www/html/files/
+>> add Write,Read,Execute permissions to group
+sudo chmod g+rwx /var/www/html/files
+>>restart apache
+sudo systemctl restart apache2
+
 
 
 
