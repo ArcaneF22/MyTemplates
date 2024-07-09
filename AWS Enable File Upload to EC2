@@ -1,8 +1,4 @@
-//CHANGE USER
-sudo chown -R www-data var/www/html
 
-//TRANSFER OWNERSHIP
-sudo chown www-data var/www/html
 
 //STEPS TO ADD PERMISSION TO MULTIPLE USERS / GROUP
 >> create a group
@@ -18,7 +14,11 @@ sudo chmod g+rwx /var/www/html/files
 sudo systemctl restart apache2
 
 
+//CHANGE USER
+sudo chown -R www-data var/www/html
 
+//TRANSFER OWNERSHIP
+sudo chown www-data var/www/html
 
 >> view users inside a group
 grep group_name /etc/group
