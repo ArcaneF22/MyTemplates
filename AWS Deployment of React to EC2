@@ -15,6 +15,9 @@ sudo vi /etc/apache2/sites-available/your_app_name.conf
 	DocumentRoot /var/www/html
 </VirtualHost>
 
-
+>>save setting of domain
 a2ensite your_app_name
+
+>> how to setup godaddy and route53 domain
+https://www.youtube.com/watch?v=hRSj2n-XKGM
 
