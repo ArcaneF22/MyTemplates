@@ -15,6 +15,18 @@ sudo vi /etc/apache2/sites-available/your_app_name.conf
 	DocumentRoot /var/www/html
 </VirtualHost>
 
+<VirtualHost *:80>
+	ServerName all-in-statistics.pro
+	ServerAlias all-in-statistics.pro
+	DocumentRoot /var/www/html
+</VirtualHost>
+
+<VirtualHost *:80>
+	ServerName www.all-in-statistics.pro
+	ServerAlias www.all-in-statistics.pro
+	DocumentRoot /var/www/html
+</VirtualHost>
+
 >>save setting of domain
 a2ensite your_app_name
 
