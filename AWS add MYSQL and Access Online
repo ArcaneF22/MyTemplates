@@ -1,4 +1,4 @@
-sudo apt install mysql-server
+sudo apt install mysql-server -y
 sudo systemctl start mysql.service
 
 
@@ -16,7 +16,7 @@ Step 1: Update the system
 sudo apt update
 
 Step 2: Install MySql
-sudo apt install mysql-server
+sudo apt install mysql-server -y
 
 Step 3: Check the Status of MySql (Active or Inactive)
 sudo systemctl status mysql
@@ -45,7 +45,8 @@ mysqlx-bind-address     = 0.0.0.0
 
 
 // CONNECT TO MYSQL REMOTELY / PERMISSIONSN
- cd /etc/mysql/mysql.conf.d/
+ sudo vi /etc/mysql/mysql.conf.d/mysqld.cnf
+ >> bind-address = 0.0.0.0
 ls
 sudo nano mysqld.cnf
 >> change bind-address = 127.0.0.1 to bind-address = 0.0.0.0
@@ -61,13 +62,14 @@ FLUSH PRIVILEGES;
 exit
 
 //ENABLE MYSQL TO BE ACCESSED BY PHP
-cd /etc/php/8.3/cli/php.ini
+sudo vi /etc/php/8.3/cli/php.ini
 >> Uncomment / removev smicolon of
-“extension=mysqli” or “extension=php_mysqli“
+extension=mysqli or extension=php_mysqli
+extension=openssl.dll.
 sudo service apache2 restart
 
 //OPEN SSL
-cd /etc/php/{PHP_VERSION}/cli/php.ini
+sudo vi /etc/php/8.3/cli/php.ini
 >> Uncomment / remove smicolon of
 extension=openssl.dll.
 
