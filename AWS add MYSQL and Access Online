@@ -55,23 +55,19 @@ sudo service mysql restart
 >> Login to mysq
 sudo mysql -u root -p
 >> Enter password
-SELECT user,plugin,host from mysql.user
+SELECT user,plugin,host from mysql.user;
 CREATE USER 'PokerOverseerer'@'%' IDENTIFIED WITH mysql_native_password BY 'Poker@67890';
 GRANT ALL PRIVILEGES ON * . * TO 'PokerOverseerer'@'%';
 FLUSH PRIVILEGES;
 exit
 
-//ENABLE MYSQL TO BE ACCESSED BY PHP
+//ENABLE MYSQL TO BE ACCESSED BY PHP //OPEN SSL
 sudo vi /etc/php/8.3/cli/php.ini
 >> Uncomment / removev smicolon of
 extension=mysqli or extension=php_mysqli
 extension=openssl.dll.
 sudo service apache2 restart
 
-//OPEN SSL
-sudo vi /etc/php/8.3/cli/php.ini
->> Uncomment / remove smicolon of
-extension=openssl.dll.
 
 
 sudo openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout pokerserver.key -out pokerserver.crt
