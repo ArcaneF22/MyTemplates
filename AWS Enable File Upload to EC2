@@ -1,18 +1,31 @@
-
-
+-----------------------------------------------------------
+-----------------------------------------------------------
 //STEPS TO ADD PERMISSION TO MULTIPLE USERS / GROUP
+
+>>go to admin user root
+sudo su -
 >> create a group
 sudo addgroup group_name
+
 >> add users
-group_name user_name
+sudo usermod -aG group_name user_name
+
+>> change password of user
+sudo passwd user_name
+passwd -> change current user password
+
 >> create folder in the directory
+
 >> add group permission to folder and sub folders
 sudo chown -R :group_name /var/www/html/files/
+
 >> add Write,Read,Execute permissions to group
 sudo chmod g+rwx /var/www/html/files
+
 >>restart apache
 sudo systemctl restart apache2
-
+-----------------------------------------------------------
+-----------------------------------------------------------
 
 //CHANGE USER
 sudo chown -R www-data var/www/html
