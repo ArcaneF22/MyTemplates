@@ -1,12 +1,14 @@
 
 sudo apt-get install apache2
-
+sudo apt upgrade apache2
 
 //HIDE DIRECTORY VIEWING OF FILES ON BROWSER
 sudo a2dismod --force autoindex
 sudo service apache2 restart
 
 //INSTALL PHP
+
+
 sudo apt install php libapache2-mod-php
 sudo apt install php-cli
 sudo apt install php-mysql
