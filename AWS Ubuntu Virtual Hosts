@@ -58,22 +58,33 @@ DEFAULT
 </VirtualHost>
 
 
-
+//DEFAULT
 //allinstats.conf
 
 <VirtualHost *:80>
 
-    ServerName www.all-in-statistics.pro
-    DocumentRoot /var/www/html
+        ServerName all-in-statistics.pro
+        ServerAlias www.all-in-statistics.pro
 
-    RewriteEngine On
-    RewriteBase /
-    RewriteRule ^index\.html$ - [L]
-    RewriteCond %{REQUEST_FILENAME} !-f
-    RewriteCond %{REQUEST_FILENAME} !-d
-    RewriteRule . /index.html [L]
+        <Directory /var/www/html>
+            Options Indexes FollowSymLinks MultiViews
+            AllowOverride All
+            Require all granted
+        </Directory>
+
+        DocumentRoot /var/www/html
+
+        RewriteEngine On
+        RewriteCond %{SERVER_NAME} =www.all-in-statistics.pro [OR]
+        RewriteCond %{SERVER_NAME} =all-in-statistics.pro
+        RewriteRule ^ https://%{SERVER_NAME}%{REQUEST_URI} [END,NE,R=permanent]
+
+        <Directory /var/www/html>
+                AllowOverride All
+        </Directory>
 
 </VirtualHost>
+
 
 
 
