@@ -1,6 +1,8 @@
+sudo apt update
+sudo apt upgrade
 
-sudo apt-get install apache2
-sudo apt upgrade apache2
+sudo apt-get install apache2 -y
+sudo apt upgrade apache2 -y
 
 //HIDE DIRECTORY VIEWING OF FILES ON BROWSER
 sudo a2dismod --force autoindex
@@ -9,9 +11,9 @@ sudo service apache2 restart
 //INSTALL PHP
 
 
-sudo apt install php libapache2-mod-php
-sudo apt install php-cli
-sudo apt install php-mysql
+sudo apt install php libapache2-mod-php -y
+sudo apt install php-cli -y
+sudo apt install php-mysql -y
 sudo systemctl restart apache2.service 
 
 sudo chown -R ubuntu /var/www/html/poker
