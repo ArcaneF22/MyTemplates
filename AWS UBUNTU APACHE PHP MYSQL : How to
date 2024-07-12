@@ -1,0 +1,118 @@
+Create account to AWS
+create an EC2 Instance
+Check all checkboxes
+Save key .PPK or .PEM
+Security Group -> Add to inbound MYSQ/Aurora 0.0.0.0
+
+
+>>>> INSTALL PUTTY
+get EC2 Public IP
+HostName = EC2 Public IP
+Port = 22
+Data > Auto-login username = ubuntu
+SSH > Auth > Credentials > Private Key > .PPK or PEM file
+click Open
+
+
+>>>> INSTALL APACHE
+sudo apt update
+sudo apt upgrade
+sudo apt-get install apache2 -y
+sudo apt upgrade apache2 -y
+sudo apt install php libapache2-mod-php -y
+sudo apt install php-cli -y
+sudo apt install php-mysql -y
+sudo systemctl restart apache2.service 
+
+
+>>>> UBUNTU USER GROUP ACCESS
+sudo su -  (Change to admin root)
+sudo addgroup group_name
+sudo usermod -aG group_name user_name
+sudo passwd user_name
+passwd  (change current user password)
+>> create folder in the directory
+>> add group permission to folder and sub folders
+sudo chown -R :group_name /var/www/html/files/
+sudo chmod g+rwx /var/www/html/files
+sudo systemctl restart apache2
+>> view users in a group
+grep group_name /etc/group
+>> view user and group ownership of folder
+stat -c "%U %G" /var/www/html/files
+>> view folder and file ownerships list
+ls -l /var/www/html/files
+>> change PHP settings
+sudo vi /etc/php/8.3/cli/php.ini
+>> Uncomment / remove semicolon of
+extension=mysqli or extension=php_mysqli
+extension=openssl.dll.
+upload_max_filesize = your_new_value 
+post_max_size = your_new_value
+sudo service apache2 restart
+
+>>> EXTRA SITES
+https://www.youtube.com/watch?v=QOSa42I0XNk&t=11s
+https://askubuntu.com/questions/767504/permissions-problems-with-var-www-html-and-my-own-home-directory-for-a-website
+
+>>>> AWS EC2 ELASTIC IP ADDRESS
+Allocate Elastic IP Address
+Add Tag (optional >> for tagging or searching)
+Allocate
+Associate IP Address
+Select Instance 
+Get new IP Address
+NOTE: All access is now on the changed Public IP Address
+
+>>>> INSTALL MYSQL
+sudo apt update
+sudo apt install mysql-server -y
+sudo systemctl start mysql.service
+sudo systemctl status mysql (check status)
+sudo mysql -u root -p
+SELECT user,plugin,host from mysql.user;
+ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY 'new_root_password';
+CREATE USER 'your_new_mysql_user'@'%' IDENTIFIED WITH mysql_native_password BY 'new_mysql_password';
+GRANT ALL PRIVILEGES ON * . * TO 'your_new_mysql_user'@'%';
+FLUSH PRIVILEGES;
+exit
+>> Now change MYSQL settings
+sudo vi /etc/mysql/mysql.conf.d/mysqld.cnf
+>> change bind-address = 127.0.0.1 to bind-address = 0.0.0.0
+sudo service mysql restart
+sudo systemctl start mysql.service
+
+>>>> INSTALL HEIDISQL
+Host: Public IP (from elastip IP or default IP)
+Username: your_new_mysql_user
+Password: new_mysql_password
+Port: 3306
+>> upload your sql if there exist
+
+>>>> 
+
+
+>>>> DOMAIN REGISTRATION
+Go to GoDaddy then buy a domain
+>> go to AWS Route53
+>> register domain to Route53 using 4 sites provided by GoDaddy
+>> how to setup godaddy and route53 domain
+https://www.youtube.com/watch?v=hRSj2n-XKGM
+
+>>>> CREATE YOUR SITE CONFIG
+sudo vi /etc/apache2/sites-available/your_app_name.conf
+    <VirtualHost *:80>
+        	ServerName your_app_domain.pro
+        	ServerAlias sample.your_app_domain.pro
+        	DocumentRoot /var/www/html
+    </VirtualHost>
+a2ensite your_app_name.conf
+
+>>>> SSL REGISTRATION
+https://certbot.eff.org/instructions?ws=apache&os=ubuntufocal
+
+
+
+>> install SSL Certificate remove not secured
+https://certbot.eff.org/instructions?ws=apache&os=ubuntufocal
+
