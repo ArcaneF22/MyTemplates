@@ -111,6 +111,13 @@ a2ensite your_app_name.conf
 >>>> SSL REGISTRATION
 https://certbot.eff.org/instructions?ws=apache&os=ubuntufocal
 
+>>>> EACT WEB APP RUTErS TO WOrk
+sudo nano /etc/apache2/apache2.conf
+>> copy and paste
+    <Directory /var/www/allinstats/>
+         FallbackResource /index.html
+    </Directory>
+
 
 
 >> install SSL Certificate remove not secured
