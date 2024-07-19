@@ -1,0 +1,18 @@
+
+
+//RENAME A KEY NAME 
+const arrayOfObjects = [
+  { key1: 'value1', key2: 'value2' },
+  { key1: 'value1', key2: 'value2' }
+];
+
+const renamedArray = arrayOfObjects.map(({ key1, ...rest }) => ({
+  newKey: key1,
+  ...rest
+}));
+
+RESULT : [
+          { newKey: 'value1', key2: 'value2' },
+          { newKey: 'value1', key2: 'value2' }
+        ]
+// ------------------------------------------------------------------------------------------
