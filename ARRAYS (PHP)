@@ -1,0 +1,6 @@
+
+//ADDITION INTEGER VALUES
+$Arr      = array(1,2,3,4,5);
+$sumPositive = array_sum(array_filter($Arr, function($i) { return $i > 0; }));
+$sumNegative = array_sum(array_filter($Arr, function($i) { return $i < 0; }));
+$sumNotZero = array_sum(array_filter($Arr, function($i) { return $i != 0; }));
