@@ -36,6 +36,9 @@ sudo chown www-data var/www/html
 >> view users inside a group
 grep group_name /etc/group
 
+>>view group list
+getent group
+
 >> view user and group ownership of folder
 stat -c "%U %G" /var/www/html/files
 
