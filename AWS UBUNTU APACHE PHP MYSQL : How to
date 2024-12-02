@@ -172,6 +172,7 @@ https://certbot.eff.org/instructions?ws=apache&os=ubuntufocal
 sudo nano /etc/apache2/apache2.conf
 >> copy and paste
     <Directory /var/www/allinstats/>
+         Require all granted
          FallbackResource /index.html
     </Directory>
 
