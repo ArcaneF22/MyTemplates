@@ -163,6 +163,7 @@ sudo vi /etc/apache2/sites-available/your_app_name.conf
         	DocumentRoot /var/www/html
     </VirtualHost>
 a2ensite your_app_name.conf
+systemctl reload apache2
 
 >>>> SSL REGISTRATION
 https://certbot.eff.org/instructions?ws=apache&os=ubuntufocal
@@ -179,3 +180,4 @@ sudo nano /etc/apache2/apache2.conf
 >> install SSL Certificate remove not secured
 https://certbot.eff.org/instructions?ws=apache&os=ubuntufocal
 
+https://www.youtube.com/watch?v=KUyQJtlIpuE
