@@ -58,91 +58,91 @@ SELECT * FROM table1;
 // CONNECT TO MYSQL REMOTELY / PERMISSIONSN
  sudo vi /etc/mysql/mysql.conf.d/mysqld.cnf
  >> bind-address = 0.0.0.0
-ls
-sudo nano mysqld.cnf
+   ls
+   sudo nano mysqld.cnf
 >> change bind-address = 127.0.0.1 to bind-address = 0.0.0.0
-ctrl+O then enter to save, ctrl+X to exit
-sudo service mysql restart
+   ctrl+O then enter to save, ctrl+X to exit
+   sudo service mysql restart
 >> Login to mysq
-sudo mysql -u root -p
+   sudo mysql -u root -p
 >> Enter password
-SELECT user,plugin,host from mysql.user;
-CREATE USER 'PokerOverseerer'@'%' IDENTIFIED WITH mysql_native_password BY 'Poker@67890';
-GRANT ALL PRIVILEGES ON * . * TO 'PokerOverseerer'@'%';
-FLUSH PRIVILEGES;
-exit
+  SELECT user,plugin,host from mysql.user;
+  CREATE USER 'PokerOverseerer'@'%' IDENTIFIED WITH mysql_native_password BY 'Poker@67890';
+  GRANT ALL PRIVILEGES ON * . * TO 'PokerOverseerer'@'%';
+  FLUSH PRIVILEGES;
+  exit
 
 //ENABLE MYSQL TO BE ACCESSED BY PHP //OPEN SSL
-sudo vi /etc/php/8.3/cli/php.ini
+   sudo vi /etc/php/8.3/cli/php.ini
 >> Uncomment / removev smicolon of
-extension=mysqli or extension=php_mysqli
-extension=openssl.dll.
-sudo service apache2 restart
+   extension=mysqli or extension=php_mysqli
+   extension=openssl.dll.
+   sudo service apache2 restart
 
 >>>> UBUNTU USER GROUP ACCESS
-sudo su -  (Change to admin root)
-sudo addgroup group_name
-sudo usermod -aG group_name user_name
-sudo passwd user_name
-passwd  (change current user password)
+   sudo su -  (Change to admin root)
+   sudo addgroup group_name
+   sudo usermod -aG group_name user_name
+   sudo passwd user_name
+   passwd  (change current user password)
 >> create folder in the directory
 >> add group permission to folder and sub folders
-sudo chown -R :group_name /var/www/html/files/
-sudo chmod g+rwx /var/www/html/files
-sudo systemctl restart apache2
+   sudo chown -R :group_name /var/www/html/files/
+   sudo chmod g+rwx /var/www/html/files
+   sudo systemctl restart apache2
 >> view users in a group
-grep group_name /etc/group
+  grep group_name /etc/group
 >> view user and group ownership of folder
-stat -c "%U %G" /var/www/html/files
+   stat -c "%U %G" /var/www/html/files
 >> view folder and file ownerships list
-ls -l /var/www/html/files
+   ls -l /var/www/html/files
 >> change PHP settings
-sudo vi /etc/php/8.3/cli/php.ini
+   sudo vi /etc/php/8.3/cli/php.ini
 >> Uncomment / remove semicolon of
-extension=mysqli or extension=php_mysqli
-extension=openssl.dll.
-upload_max_filesize = your_new_value 
-post_max_size = your_new_value
-sudo service apache2 restart
+   extension=mysqli or extension=php_mysqli
+   extension=openssl.dll.
+   upload_max_filesize = your_new_value 
+   post_max_size = your_new_value
+   sudo service apache2 restart
 
 >>> EXTRA SITES
-https://www.youtube.com/watch?v=QOSa42I0XNk&t=11s
-https://askubuntu.com/questions/767504/permissions-problems-with-var-www-html-and-my-own-home-directory-for-a-website
+   https://www.youtube.com/watch?v=QOSa42I0XNk&t=11s
+   https://askubuntu.com/questions/767504/permissions-problems-with-var-www-html-and-my-own-home-directory-for-a-website
 
 >>>> AWS EC2 ELASTIC IP ADDRESS
-Allocate Elastic IP Address
-Add Tag (optional >> for tagging or searching)
-Allocate
-Associate IP Address
-Select Instance 
-Get new IP Address
-NOTE: All access is now on the changed Public IP Address
+   Allocate Elastic IP Address
+   Add Tag (optional >> for tagging or searching)
+   Allocate
+   Associate IP Address
+   Select Instance 
+   Get new IP Address
+   NOTE: All access is now on the changed Public IP Address
 
 >>>> INSTALL MYSQL
-sudo apt update
-sudo apt install mysql-server -y
-sudo systemctl start mysql.service
-sudo systemctl status mysql (check status)
-sudo mysql -u root -p
-SELECT user,plugin,host from mysql.user;
-ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY 'new_root_password';
-CREATE USER 'your_new_mysql_user'@'%' IDENTIFIED WITH mysql_native_password BY 'new_mysql_password';
-GRANT ALL PRIVILEGES ON *.* TO 'PokerOverseer'@'%';
-EXTRA >> DROP USER 'PokerOverseer'@'%';
-EXTRA >> RENAME USER 'PokerOverseers'@'localhost' TO 'PokerOverseer'@'localhost';
-FLUSH PRIVILEGES;
-exit
+   sudo apt update
+   sudo apt install mysql-server -y
+   sudo systemctl start mysql.service
+   sudo systemctl status mysql (check status)
+   sudo mysql -u root -p
+   SELECT user,plugin,host from mysql.user;
+   ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY 'new_root_password';
+   CREATE USER 'your_new_mysql_user'@'%' IDENTIFIED WITH mysql_native_password BY 'new_mysql_password';
+   GRANT ALL PRIVILEGES ON *.* TO 'PokerOverseer'@'%';
+   EXTRA >> DROP USER 'PokerOverseer'@'%';
+   EXTRA >> RENAME USER 'PokerOverseers'@'localhost' TO 'PokerOverseer'@'localhost';
+   FLUSH PRIVILEGES;
+   exit
 >> Now change MYSQL settings
-sudo vi /etc/mysql/mysql.conf.d/mysqld.cnf
+   sudo vi /etc/mysql/mysql.conf.d/mysqld.cnf
 >> change bind-address = 127.0.0.1 to bind-address = 0.0.0.0
-sudo service mysql restart
-sudo systemctl start mysql.service
+  sudo service mysql restart
+  sudo systemctl start mysql.service
 
 >>>> INSTALL HEIDISQL
-Host: Public IP (from elastip IP or default IP)
-Username: your_new_mysql_user
-Password: new_mysql_password
-Port: 3306
+   Host: Public IP (from elastip IP or default IP)
+   Username: your_new_mysql_user
+   Password: new_mysql_password
+   Port: 3306
 >> upload your sql if there exist
 
 >>>> 
