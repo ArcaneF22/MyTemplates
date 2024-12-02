@@ -1,3 +1,22 @@
+Ubuntu Keys
+sudo 
+Ctrl + O: Write (save) the file.
+Ctrl + X: Exit the editor. If there are unsaved changes, it will prompt you to save.
+Ctrl + W: Search within the file.
+Ctrl + K: Cut the current line.
+Ctrl + U: Paste the cut content.
+Ctrl + _ (underscore): Go to a specific line number.
+vim filename: Open a file with the vim text editor.
+i: Switch to insert mode to edit the text.
+Esc: Exit insert mode and return to command mode.
+:w: Save the file.
+:q: Quit the editor.
+:wq: Save and quit.
+/search_term: Search for a term within the file.
+n: Find the next occurrence of the search term.
+N: Find the previous occurrence of the search term.
+
+
 Create account to AWS
 create an EC2 Instance
 Check all checkboxes
@@ -24,6 +43,41 @@ sudo apt install php-cli -y
 sudo apt install php-mysql -y
 sudo systemctl restart apache2.service 
 
+>>>> INSTALL MYSQL
+sudo apt install mysql-server -y
+sudo systemctl start mysql.service
+sudo systemctl status mysql
+sudo mysql -u root -p
+ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY 'Poker_67890';
+FLUSH PRIVILEGES;
+CREATE DATABASE mysql_test;
+CREATE TABLE table1 (id INT, name VARCHAR(45));
+INSERT INTO table1 VALUES(1, 'Virat'), (2, 'Sachin'), (3, 'Dhoni'), (4, 'ABD');
+SELECT * FROM table1;
+
+// CONNECT TO MYSQL REMOTELY / PERMISSIONSN
+ sudo vi /etc/mysql/mysql.conf.d/mysqld.cnf
+ >> bind-address = 0.0.0.0
+ls
+sudo nano mysqld.cnf
+>> change bind-address = 127.0.0.1 to bind-address = 0.0.0.0
+ctrl+O then enter to save, ctrl+X to exit
+sudo service mysql restart
+>> Login to mysq
+sudo mysql -u root -p
+>> Enter password
+SELECT user,plugin,host from mysql.user;
+CREATE USER 'PokerOverseerer'@'%' IDENTIFIED WITH mysql_native_password BY 'Poker@67890';
+GRANT ALL PRIVILEGES ON * . * TO 'PokerOverseerer'@'%';
+FLUSH PRIVILEGES;
+exit
+
+//ENABLE MYSQL TO BE ACCESSED BY PHP //OPEN SSL
+sudo vi /etc/php/8.3/cli/php.ini
+>> Uncomment / removev smicolon of
+extension=mysqli or extension=php_mysqli
+extension=openssl.dll.
+sudo service apache2 restart
 
 >>>> UBUNTU USER GROUP ACCESS
 sudo su -  (Change to admin root)
