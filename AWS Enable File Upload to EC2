@@ -19,6 +19,11 @@ passwd -> change current user password
 >> add group permission to folder and sub folders
 sudo chown -R :group_name /var/www/html/files/
 
+sudo chown -R :pokergrp /var/www/poker/.PHPAPI/fetch/
+sudo chmod g+rwx /var/www/poker/.PHPAPI/fetch/
+
+sudo chown www-data /var/www/poker/.PHPAPI/fetch/
+
 >> add Write,Read,Execute permissions to group
 sudo chmod g+rwx /var/www/html/files
 
