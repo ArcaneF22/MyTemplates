@@ -176,6 +176,16 @@ sudo nano /etc/apache2/apache2.conf
          FallbackResource /index.html
     </Directory>
 
+>> to change default folder for php site files
+sudo vi /etc/apache2/sites-available/000-default.conf
+      <VirtualHost *:80>
+              ServerAdmin webmaster@localhost
+              DocumentRoot /var/www/html
+      
+              ErrorLog ${APACHE_LOG_DIR}/error.log
+              CustomLog ${APACHE_LOG_DIR}/access.log combined
+      </VirtualHost>
+
 
 
 >> install SSL Certificate remove not secured
