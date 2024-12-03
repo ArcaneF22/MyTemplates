@@ -140,8 +140,9 @@ sudo systemctl restart apache2
 	
 >>> PUTTY: Setup Auto Update Certificate
 
-	
-	/etc/letsencrypt/live/all-in-statistics.pro/fullchain.pem 
+	SSLCertificateFile 	/etc/letsencrypt/live/all-in-statistics.pro/fullchain.pem
+	SSLCertificateKeyFile	/etc/letsencrypt/live/all-in-statistics.pro/privkey.pem
+
 	
 
 
