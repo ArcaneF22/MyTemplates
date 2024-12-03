@@ -1,0 +1,149 @@
+LINK:  https://www.youtube.com/watch?v=TqBnNVxfFyg&t=893s
+
+Launch instance
+select key or create a key
+Check HTTPS Checkboxes
+Launch
+
+>>> PUTTY
+1. Get Public IP/DNS
+2. Log to PUTTY
+	Host Name == Public IP/DNS
+	Connection > Data > Login Username == ubuntu
+	Connection > SSZHZ > Auth > Credentials > Private Key File for authentication > Browse == <UPLOAD KEY .PEM or .PPK from AWS instance key>
+	Open
+
+<CLOSE> == sudo vi == EXIT: ctrl+esc, TYPE: :wq, PRESS: Enter // sudo nano == EXIT: ctrl+x, TYPE: y, PRESS: Enter
+
+>>> PUTTY: Install necessities
+sudo su
+sudo apt update
+sudo apt upgrade -y
+sudo apt install php apache2 mysql-server phpMyAdmin -y
+
+>>> PUTTY: create a folder inside phpMyAdmin
+cd /var/www/
+mkdir folder_name
+
+>>>> PUTTY: create a php sample
+sudo nano index.php
+<?php echo "Hi I AM YOU"; />
+<CLOSE>
+
+
+>>> PUTTY: change default folder of phpMyAdmin
+sudo nano /etc/apache2/sites/available/000-default.conf
+
+>>> PUTTY: change value of
+DocumentRoot /var/www/folder_name
+<CLOSE>
+service apache2 reload
+
+
+>>>> AWS Elastic IP Address
+Associate Elastic IP to your instance
+Access instance site via new Elastic IP Address
+
+>>>> AWS Route 53
+	>> create  Domain in GoDaddy
+	>> input Elastic IP to Hosted Zones > Records with the 3 Domain Zones/Links from GoDaddy
+	>> Define simple record > Create Record
+
+
+>>>> PUTTY: set access to site 
+    sudo vi /etc/apache2/sites/available/my-config.conf
+>>>> Paste this
+    	<VirtualHost *:80>
+                ServerName all-in-statistics.pro
+                ServerAlias www.all-in-statistics.pro
+                DocumentRoot /var/www/poker
+    	</VirtualHost>
+	<CLOSE>
+   	a2ensite my-config.conf
+   	systemctl reload apache2
+   	service apache2 reload
+	>> Enabled Access site to http://all-in-statistics.pro
+
+>>>> PUTTY: Create user group
+sudo su -
+sudo addgroup group_name
+	>> Add users
+	sudo usermod -aG group_name user_name
+	>> Change password of user
+	sudo passwd user_name
+	passwd
+
+
+>>>> PUTTY: Set access to folders
+sudo chown -R :group_name /var/www/poker/
+sudo chmod -R g+rwx /var/www/poker/
+sudo systemctl restart apache2
+
+>>> PUTTY: Setup MYSQL Access
+	sudo vi /etc/mysql/mysql.conf.d/mysqld.cnf
+	>> change values :
+		bind-address = 0.0.0.0
+	sudo service mysql restart
+
+>>> PUTTY: Setup PHP Extensions
+	sudo vi /etc/php/8.3/cli/php.ini
+	>> Uncomment / remove semicolon:
+		extension=mysqli or extension=php_mysqli
+		extension=openssl.dll.
+	sudo service apache2 restart
+
+>>>PUTTY:  Change PhpMyAdmin Alias (default site)
+	cd /etc/phpmyadmin
+	anano apache.conf
+	>> replace : Alias /phpmyadmin /usr/share/phpMyAdmin 
+	>> Alias / /usr/share/phpMyAdmin
+	<CLOSE>
+	sudo service apache2 restart
+
+
+>>> PUTTY: Setup MYSQL Accounts
+	sudo mysql -u root -p
+	>> Press enter / No Password yet
+	>> Set password for default admin user 'root'
+		ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY 'Poker@67890';
+		FLUSH PRIVILEGES;
+	>> Create a new admin user
+		CREATE USER 'PokerOverseerer'@'%' IDENTIFIED WITH mysql_native_password BY 'Poker@67890';
+		GRANT ALL PRIVILEGES ON * . * TO 'PokerOverseerer'@'%';
+		FLUSH PRIVILEGES;
+		SELECT user,plugin,host from mysql.user;
+		exit
+
+>>>> PUTTY: Allow ReactJS Pages to Route
+	sudo nano /etc/apache2/apache2.conf
+	>>Copy and paste
+    	<Directory /var/www/poker/>
+         	Require all granted
+         	FallbackResource /index.html
+    	</Directory>
+
+>>> PUTTY: Install Certificate
+	sudo certbot --apache
+	certbot certonly
+	>> Fill in details ( 2 > site address > Webroot is /var/www/folder_name)
+	>> SCREEN SHOT CERTIFICATES!
+
+>>> PUTTY: HTTPS Setup
+	cd /etc/apache2/sites-available
+	cp default-ssl.conf my-config-ssl.conf
+	sudo vi my-config-ssl.conf
+	>> Change DocumentRoot /var/www/html to 
+	DocumentRoot /var/www/poker
+	>> Change SSLCertificateFile && SSLCertificateKeyFile (Copy from screenshot)
+	a2enmod ssl
+	sudo service apache2 restart
+	
+>>> PUTTY: Setup Auto Update Certificate
+
+	
+	/etc/letsencrypt/live/all-in-statistics.pro/fullchain.pem 
+	
+
+
+
+	
