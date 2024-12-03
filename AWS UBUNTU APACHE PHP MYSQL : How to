@@ -81,9 +81,9 @@ SELECT * FROM table1;
 
 >>>> UBUNTU USER GROUP ACCESS
    sudo su -  (Change to admin root)
-   sudo addgroup group_name
-   sudo usermod -aG group_name user_name
-   sudo passwd user_name
+   sudo addgroup pokergrp
+   sudo usermod -aG pokergrp ubuntu
+   sudo passwd ubuntu
    passwd  (change current user password)
 >> create folder in the directory
 >> add group permission to folder and sub folders
@@ -167,6 +167,9 @@ systemctl reload apache2
 
 >>>> SSL REGISTRATION
 https://certbot.eff.org/instructions?ws=apache&os=ubuntufocal
+
+>>>> Setup AWS Full
+https://www.youtube.com/watch?v=TZeHIFqMAkM
 
 >>>> EACT WEB APP RUTErS TO WOrk
 sudo nano /etc/apache2/apache2.conf
