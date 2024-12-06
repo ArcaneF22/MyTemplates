@@ -19,10 +19,12 @@ Launch
 sudo su
 sudo apt update
 sudo apt upgrade -y
-sudo apt install php apache2 mysql-server phpmyadmin -y
+sudo apt install php apache2 mysql-server phpmyadmin
+sudo apt install php apache2 phpmyadmin 
 
 >>> PUTTY: create a folder inside phpMyAdmin
-cd /var/www/
+
+
 mkdir folder_name
 
 >>>> PUTTY: create a php sample
@@ -80,11 +82,25 @@ sudo chown -R :mygroup /var/www/poker/
 sudo chmod -R g+rwx /var/www/poker/
 sudo systemctl restart apache2
 
+sudo chown -R ubuntu:mygroup /var/www/poker/
+sudo chmod -R g+rwx /var/www/poker/
+sudo systemctl restart apache2
+
+
 >>> PUTTY: Setup MYSQL Access
 	sudo vi /etc/mysql/mysql.conf.d/mysqld.cnf
 	>> change values :
 		bind-address = 0.0.0.0
 	sudo service mysql restart
+
+>>> MYSQL Optimize
+>> create backup
+sudo cp /etc/mysql/my.cnf /etc/mysql/my.cnf.backup
+sudo nano /etc/mysql/mysql.conf.d/mysqld.cnf
+innodb_buffer_pool_size = 4G
+innodb_log_file_size = 512M
+max_connections = 200
+
 
 >>> PUTTY: Setup PHP Extensions
 	sudo vi /etc/php/8.3/cli/php.ini
@@ -95,7 +111,7 @@ sudo systemctl restart apache2
 
 >>>PUTTY:  Change PhpMyAdmin Alias (default site)
 	cd /etc/phpmyadmin
-	anano apache.conf
+	sudo nano apache.conf
 	>> replace : Alias /phpmyadmin /usr/share/phpMyAdmin 
 	>> Alias / /usr/share/phpMyAdmin
 	<CLOSE>
@@ -118,12 +134,13 @@ sudo systemctl restart apache2
 >>>> PUTTY: Allow ReactJS Pages to Route
 	sudo nano /etc/apache2/apache2.conf
 	>>Copy and paste
-    	<Directory /var/www/poker/>
-         	Require all granted
-         	FallbackResource /index.html
-    	</Directory>
+<Directory /var/www/poker/>
+	Require all granted
+	FallbackResource /index.html
+</Directory>
 
 >>> PUTTY: Install Certificate
+	sudo apt install certbot -y
 	sudo certbot --apache
 	certbot certonly
 	>> if certbot not found
@@ -141,7 +158,13 @@ sudo systemctl restart apache2
 	>> Change SSLCertificateFile && SSLCertificateKeyFile (Copy from screenshot)
 	a2enmod ssl
 	sudo service apache2 restart
-	
+
+crontab -e
+>>copy paste
+0 0,12 * * * /usr/bin/certbot renew
+or
+30 3,15 * * * certbot renew --quiet && systemctl reload apache2
+
 >>> PUTTY: Setup Auto Update Certificate
 
 	SSLCertificateFile 	/etc/letsencrypt/live/all-in-statistics.pro/fullchain.pem
