@@ -19,7 +19,7 @@ Launch
 sudo su
 sudo apt update
 sudo apt upgrade -y
-sudo apt install php apache2 mysql-server phpMyAdmin -y
+sudo apt install php apache2 mysql-server phpmyadmin -y
 
 >>> PUTTY: create a folder inside phpMyAdmin
 cd /var/www/
@@ -32,7 +32,7 @@ sudo nano index.php
 
 
 >>> PUTTY: change default folder of phpMyAdmin
-sudo nano /etc/apache2/sites/available/000-default.conf
+sudo nano /etc/apache2/sites-available/000-default.conf
 
 >>> PUTTY: change value of
 DocumentRoot /var/www/folder_name
@@ -51,7 +51,7 @@ Access instance site via new Elastic IP Address
 
 
 >>>> PUTTY: set access to site 
-    sudo vi /etc/apache2/sites/available/my-config.conf
+    sudo vi /etc/apache2/sites-available/my-config.conf
 >>>> Paste this
     	<VirtualHost *:80>
                 ServerName all-in-statistics.pro
@@ -69,13 +69,14 @@ sudo su -
 sudo addgroup group_name
 	>> Add users
 	sudo usermod -aG group_name user_name
+		sudo usermod -aG mygroup ubuntu
 	>> Change password of user
 	sudo passwd user_name
 	passwd
 
 
 >>>> PUTTY: Set access to folders
-sudo chown -R :group_name /var/www/poker/
+sudo chown -R :mygroup /var/www/poker/
 sudo chmod -R g+rwx /var/www/poker/
 sudo systemctl restart apache2
 
@@ -125,6 +126,9 @@ sudo systemctl restart apache2
 >>> PUTTY: Install Certificate
 	sudo certbot --apache
 	certbot certonly
+	>> if certbot not found
+		sudo apt update
+		sudo apt install certbot
 	>> Fill in details ( 2 > site address > Webroot is /var/www/folder_name)
 	>> SCREEN SHOT CERTIFICATES!
 
@@ -143,8 +147,19 @@ sudo systemctl restart apache2
 	SSLCertificateFile 	/etc/letsencrypt/live/all-in-statistics.pro/fullchain.pem
 	SSLCertificateKeyFile	/etc/letsencrypt/live/all-in-statistics.pro/privkey.pem
 
-	
 
+
+>>>> OTHERS <<<<<
+
+>>> ADDING SUBDOMAIN FROM A SEPARATE SERVER (for APIor frontend)
+Login to go daddy
+2. Open your exisitin DOMAIN
+3. Click DNS (left side)
+4. Forwarding > Add Forwarding (sub domain)
+5. add sub domain 'api' then destination url 'api.domain.com'
+6. click save
+7. Go to DNS Records
+8. Click Add New Record > Type: A > Name: api > Value: IpAddress > SAVE
 
 
 	
