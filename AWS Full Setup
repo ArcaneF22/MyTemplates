@@ -170,6 +170,8 @@ or
 	SSLCertificateFile 	/etc/letsencrypt/live/all-in-statistics.pro/fullchain.pem
 	SSLCertificateKeyFile	/etc/letsencrypt/live/all-in-statistics.pro/privkey.pem
 
+sudo systemctl enable apache2
+sudo systemctl enable mysql
 
 
 >>>> OTHERS <<<<<
