@@ -77,14 +77,20 @@ sudo addgroup group_name
 	passwd
 
 
->>>> PUTTY: Set access to folders
-sudo chown -R :mygroup /var/www/poker/
-sudo chmod -R g+rwx /var/www/poker/
-sudo systemctl restart apache2
+>>>> PUTTY: Set access to folders for ADMIN file changes
+	sudo chown -R :mygroup /var/www/poker/
+	sudo chmod -R g+rwx /var/www/poker/
+	sudo systemctl restart apache2
+	
+	sudo chown -R ubuntu:mygroup /var/www/poker/
+	sudo chmod -R g+rwx /var/www/poker/
+	sudo systemctl restart apache2
 
-sudo chown -R ubuntu:mygroup /var/www/poker/
-sudo chmod -R g+rwx /var/www/poker/
-sudo systemctl restart apache2
+>>>> PUTTY: Set access to folders for USERS to upload files
+	sudo chown -R www-data /var/www/poker/images
+	sudo chmod -R g+rwx /var/www/poker/images
+	sudo systemctl restart apache2
+
 
 
 >>> PUTTY: Setup MYSQL Access
@@ -110,8 +116,7 @@ max_connections = 200
 	sudo service apache2 restart
 
 >>>PUTTY:  Change PhpMyAdmin Alias (default site)
-	cd /etc/phpmyadmin
-	sudo nano apache.conf
+	sudo nano /etc/phpmyadmin/apache.conf
 	>> replace : Alias /phpmyadmin /usr/share/phpMyAdmin 
 	>> Alias / /usr/share/phpMyAdmin
 	<CLOSE>
@@ -141,6 +146,8 @@ max_connections = 200
 
 >>> PUTTY: Install Certificate
 	sudo apt install certbot -y
+sudo apt install certbot python3-certbot-apache -y
+
 	sudo certbot --apache
 	certbot certonly
 	>> if certbot not found
@@ -156,8 +163,11 @@ max_connections = 200
 	>> Change DocumentRoot /var/www/html to 
 	DocumentRoot /var/www/poker
 	>> Change SSLCertificateFile && SSLCertificateKeyFile (Copy from screenshot)
+	a2ensite my-config-ssl.conf
 	a2enmod ssl
 	sudo service apache2 restart
+
+	www.all-in-statistics.pro,all-in-statistics.pro
 
 crontab -e
 >>copy paste
