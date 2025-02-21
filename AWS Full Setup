@@ -1,4 +1,5 @@
-LINK:  https://www.youtube.com/watch?v=TqBnNVxfFyg&t=893s
+FULL LINK:  https://www.youtube.com/watch?v=TqBnNVxfFyg&t=893s
+GODADDY+ROUTE53 LINK: https://www.youtube.com/watch?v=hRSj2n-XKGM&t=17s
 
 Launch instance
 select key or create a key
@@ -15,12 +16,15 @@ Launch
 
 <CLOSE> == sudo vi == EXIT: ctrl+esc, TYPE: :wq, PRESS: Enter // sudo nano == EXIT: ctrl+x, TYPE: y, PRESS: Enter
 
->>> PUTTY: Install necessities
+USING >>> sudo vi >> tosave click >> esc --> :wq
+
+>>> PUTTY: Install necessities <<<
 sudo su
 sudo apt update
 sudo apt upgrade -y
-sudo apt install php apache2 mysql-server phpmyadmin
-sudo apt install php apache2 phpmyadmin 
+sudo apt install php apache2 mysql-server phpmyadmin -y
+	>> select >> apache2
+	>> select >> no password
 
 >>> PUTTY: create a folder inside phpMyAdmin
 
@@ -51,6 +55,9 @@ Access instance site via new Elastic IP Address
 	>> input Elastic IP to Hosted Zones > Records with the 3 Domain Zones/Links from GoDaddy
 	>> Define simple record > Create Record
 
+	>>>>> Add WWW
+	1 >> Create Record --> blank Record Name --> Record Type: A --> Value: Elastic_IP --> Route Policy Simple Routing --> Submit Create Records
+	2 >> Create Record --> 'www' Record Name --> Record Type: CNAME --> Value: Domain_Site.com --> Route Policy Simple Routing --> Submit Create Records
 
 >>>> PUTTY: set access to site 
     sudo vi /etc/apache2/sites-available/my-config.conf
@@ -68,14 +75,23 @@ Access instance site via new Elastic IP Address
 
 >>>> PUTTY: Create user group
 sudo su -
-sudo addgroup group_name
+sudo addgroup mygrp
 	>> Add users
-	sudo usermod -aG group_name user_name
+	sudo usermod -aG mygrp user_name
 		sudo usermod -aG mygroup ubuntu
 	>> Change password of user
 	sudo passwd user_name
 	passwd
 
+>>>> PUTTY: Create user group --> REGALIA-first
+sudo su -
+_my
+	>> Add users
+	sudo usermod -aG grp user_name
+		sudo usermod -aG grp ubuntu
+	>> Change password of user
+	sudo passwd user_name
+	passwd
 
 >>>> PUTTY: Set access to folders for ADMIN file changes
 	sudo chown -R :mygroup /var/www/poker/
@@ -135,6 +151,9 @@ max_connections = 200
 		FLUSH PRIVILEGES;
 		SELECT user,plugin,host from mysql.user;
 		exit
+
+		// CREATE USER 'RegaliaOverseerer'@'%' IDENTIFIED WITH mysql_native_password BY 'Regalia@67890'; --> First-Regalia
+		// GRANT ALL PRIVILEGES ON * . * TO 'RegaliaOverseerer'@'%';
 
 >>>> PUTTY: Allow ReactJS Pages to Route
 	sudo nano /etc/apache2/apache2.conf
