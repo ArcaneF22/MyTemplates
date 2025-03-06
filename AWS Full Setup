@@ -202,6 +202,12 @@ or
 sudo systemctl enable apache2
 sudo systemctl enable mysql
 
+>>>>> MANUAL RENEW CERT ON UBUNTU SERVER
+sudo certbot renew --webroot -w /var/www/html
+ --> use address of root website
+sudo systemctl restart apache2 
+
+
 
 >>>> OTHERS <<<<<
 
