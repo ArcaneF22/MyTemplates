@@ -78,7 +78,7 @@ sudo su -
 sudo addgroup mygrp
 	>> Add users
 	sudo usermod -aG mygrp user_name
-		sudo usermod -aG mygroup ubuntu
+		sample: sudo usermod -aG mygroup ubuntu
 	>> Change password of user
 	sudo passwd user_name
 	passwd
@@ -87,18 +87,18 @@ sudo addgroup mygrp
 sudo su -
 _my
 	>> Add users
-	sudo usermod -aG grp user_name
-		sudo usermod -aG grp ubuntu
+	sudo usermod -aG mygrp user_name
+		sudo usermod -aG mygrp ubuntu
 	>> Change password of user
 	sudo passwd user_name
 	passwd
 
 >>>> PUTTY: Set access to folders for ADMIN file changes
-	sudo chown -R :mygroup /var/www/poker/
+	sudo chown -R :mygrp /var/www/poker/
 	sudo chmod -R g+rwx /var/www/poker/
 	sudo systemctl restart apache2
 	
-	sudo chown -R ubuntu:mygroup /var/www/poker/
+	sudo chown -R ubuntu:mygrp /var/www/poker/
 	sudo chmod -R g+rwx /var/www/poker/
 	sudo systemctl restart apache2
 
