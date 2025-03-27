@@ -33,7 +33,7 @@ mkdir folder_name
 
 >>>> PUTTY: create a php sample
 sudo nano index.php
-<?php echo "Hi I AM YOU"; />
+<?php echo "Hi I AM YOU"; ?>
 <CLOSE>
 
 
