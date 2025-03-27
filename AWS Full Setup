@@ -89,6 +89,7 @@ _my
 	>> Add users
 	sudo usermod -aG mygrp user_name
 		sudo usermod -aG mygrp ubuntu
+		sudo usermod -aG mygrp www-data
 	>> Change password of user
 	sudo passwd user_name
 	passwd
