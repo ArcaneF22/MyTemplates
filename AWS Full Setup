@@ -195,6 +195,10 @@ crontab -e
 or
 30 3,15 * * * certbot renew --quiet && systemctl reload apache2
 
+>> to auto call a PHP function or file
+0 */12 * * * /usr/bin/php /var/www/poker/.PHPAPI/uploads/auto_fx.php
+
+
 >>> PUTTY: Setup Auto Update Certificate
 
 	SSLCertificateFile 	/etc/letsencrypt/live/all-in-statistics.pro/fullchain.pem
