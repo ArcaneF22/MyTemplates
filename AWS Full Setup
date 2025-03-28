@@ -59,6 +59,21 @@ Access instance site via new Elastic IP Address
 	1 >> Create Record --> blank Record Name --> Record Type: A --> Value: Elastic_IP --> Route Policy Simple Routing --> Submit Create Records
 	2 >> Create Record --> 'www' Record Name --> Record Type: CNAME --> Value: Domain_Site.com --> Route Policy Simple Routing --> Submit Create Records
 
+	>>>> PROCESS
+	1. Get GoDaddy Domain
+	2. AWS --> Route53 --> Hosted Zones --> Create Hosted Zone --> Create Record
+	3. Add 'A' simple routing records 
+		Recorn Name:			*** Blank
+		Type: 				A - Routes Traffic to an IPV4 and some AWS Resources
+		Value/Route (Endpoint):  	*** Public Elastic IP Address of your instance
+	4. Add 'CNAME' simple routing records 
+		Recorn Name:			www
+		Type: 				CNAME - Routes Traffic to another domain name and some AWS Resources
+		Value/Route (Endpoint):  	*** your domain site
+	5. Copy your domain 4 Links from  'Type: NS', 'Routing: Simple' under 'Value/Route' 
+	6. Go to GoDaddy --> Domains --> your domain --> DNS --> Name Servers --> Add/Change --> Paste 4 Links (remove period at the end)
+	7. Go to Putty --> create Cert
+
 >>>> PUTTY: set access to site 
     sudo vi /etc/apache2/sites-available/my-config.conf
 >>>> Paste this
