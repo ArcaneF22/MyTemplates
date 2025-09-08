@@ -26,7 +26,7 @@ sudo apt install php apache2 mysql-server phpmyadmin -y
 	>> select >> apache2
 	>> select >> no password
 
->>> PUTTY: create a folder inside phpMyAdmin
+	>>> PUTTY: create a folder inside phpMyAdmin
 
 
 mkdir folder_name
@@ -52,12 +52,15 @@ Access instance site via new Elastic IP Address
 
 >>>> AWS Route 53
 	>> create  Domain in GoDaddy
+	>> (if domain exist) go to Route53
+	>> Create hosted Zone, input domain as name
+	>> Open hosted zone, 
+	>> Create record
+	>> Define Simple records ==> Subdomain: BLANK --> Record Type: A - Routes traffic... --> Value/Traffic to: IP Address .... ==> add elasticIP / Public IP --> Submit Create Records
+	>> Define Simple records ==> Subdmain: www --> Record Type: CNAME - Routes traffic... --> Value/Traffic to: DOMAIN_ADDRESS.com  --> Submit Create Records
+	>> GODADDY 
 	>> input Elastic IP to Hosted Zones > Records with the 3 Domain Zones/Links from GoDaddy
 	>> Define simple record > Create Record
-
-	>>>>> Add WWW
-	1 >> Create Record --> blank Record Name --> Record Type: A --> Value: Elastic_IP --> Route Policy Simple Routing --> Submit Create Records
-	2 >> Create Record --> 'www' Record Name --> Record Type: CNAME --> Value: Domain_Site.com --> Route Policy Simple Routing --> Submit Create Records
 
 	>>>> PROCESS
 	1. Get GoDaddy Domain
@@ -92,10 +95,11 @@ Access instance site via new Elastic IP Address
 sudo su -
 sudo addgroup mygrp
 	>> Add users
-	sudo usermod -aG mygrp user_name
+	sudo usermod -aG mygrp myusr
 		sample: sudo usermod -aG mygroup ubuntu
 	>> Change password of user
-	sudo passwd user_name
+	sudo adduser myusr
+	sudo passwd myusr
 	passwd
 
 >>>> PUTTY: Create user group --> REGALIA-first
@@ -110,17 +114,17 @@ _my
 	passwd
 
 >>>> PUTTY: Set access to folders for ADMIN file changes
-	sudo chown -R :mygrp /var/www/poker/
-	sudo chmod -R g+rwx /var/www/poker/
-	sudo systemctl restart apache2
+	sudo chown -R :mygrp /var/www/poker/ or .PHPAPI
+	sudo chmod -R g+rwx /var/www/poker/ or .PHPAPI
+	sudo systemctl restart apache2 or .PHPAPI
 	
 	sudo chown -R ubuntu:mygrp /var/www/poker/
 	sudo chmod -R g+rwx /var/www/poker/
 	sudo systemctl restart apache2
 
 >>>> PUTTY: Set access to folders for USERS to upload files
-	sudo chown -R www-data /var/www/poker/images
-	sudo chmod -R g+rwx /var/www/poker/images
+	sudo chown -R www-data /var/www/poker/images or .PHPAPI
+	sudo chmod -R g+rwx /var/www/poker/images or .PHPAPI
 	sudo systemctl restart apache2
 
 
@@ -146,7 +150,7 @@ max_connections = 200
 		extension=mysqli or extension=php_mysqli
 		extension=openssl.dll.
 	sudo service apache2 restart
-
+cd
 >>>PUTTY:  Change PhpMyAdmin Alias (default site)
 	sudo nano /etc/phpmyadmin/apache.conf
 	>> replace : Alias /phpmyadmin /usr/share/phpMyAdmin 
