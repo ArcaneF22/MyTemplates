@@ -23,23 +23,31 @@ Create Config files
 sudo nano /etc/apache2/sites-available/sub.example.com.conf
 
 <VirtualHost *:80>
-    ServerAdmin admin@example.com
-    ServerName sub.example.com
-    DocumentRoot /var/www/sub.example.com/public_html
+    ServerName beta.test-all-in-statistics.pro
+    DocumentRoot /var/www/beta
 
-    <Directory /var/www/sub.example.com/public_html>
+    <Directory /var/www/beta>
         Options Indexes FollowSymLinks
         AllowOverride All
         Require all granted
     </Directory>
 
-    ErrorLog ${APACHE_LOG_DIR}/sub_error.log
-    CustomLog ${APACHE_LOG_DIR}/sub_access.log combined
+    # Fixes React Router 404 on refresh
+    FallbackResource /index.html
+
+    ErrorLog ${APACHE_LOG_DIR}/one_error.log
+    CustomLog ${APACHE_LOG_DIR}/one_access.log combined
+RewriteEngine on
+RewriteCond %{SERVER_NAME} =beta.test-all-in-statistics.pro
+RewriteRule ^ https://%{SERVER_NAME}%{REQUEST_URI} [END,NE,R=permanent]
 </VirtualHost>
+
 
 sudo a2ensite sub.example.com.conf
 sudo systemctl restart apache2
 
 Activate subdomains here
 
+sudo certbot --apache
+or solo
 sudo certbot --apache -d sub.example.com
