@@ -20,7 +20,11 @@ Create sub domain folders using Putty
 
 Create Config files
 
-sudo nano /etc/apache2/sites-available/sub.example.com.conf
+cd /etc/apache2/sites-available/
+
+ls
+
+sudo nano sub.example.com.conf
 
 <VirtualHost *:80>
     ServerName beta.test-all-in-statistics.pro
