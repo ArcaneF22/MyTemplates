@@ -1,0 +1,45 @@
+Log in to the AWS Management Console and open Route 53.
+
+Go to Hosted Zones and select your domain (e.g., example.com).
+
+Click Create record.
+
+Record name: Enter your subdomain (e.g., dev or blog).
+
+Record type: Select A - Routes traffic to an IPv4 address.
+
+Value: Paste your EC2 Elastic IP address.
+
+Click Create records.
+
+Create sub domain folders using Putty
+
+	sudo chown -R ubuntu:mygrp /var/www/poker/
+	sudo chmod -R g+rwx /var/www/poker/
+	sudo systemctl restart apache2
+
+Create Config files
+
+sudo nano /etc/apache2/sites-available/sub.example.com.conf
+
+<VirtualHost *:80>
+    ServerAdmin admin@example.com
+    ServerName sub.example.com
+    DocumentRoot /var/www/sub.example.com/public_html
+
+    <Directory /var/www/sub.example.com/public_html>
+        Options Indexes FollowSymLinks
+        AllowOverride All
+        Require all granted
+    </Directory>
+
+    ErrorLog ${APACHE_LOG_DIR}/sub_error.log
+    CustomLog ${APACHE_LOG_DIR}/sub_access.log combined
+</VirtualHost>
+
+sudo a2ensite sub.example.com.conf
+sudo systemctl restart apache2
+
+Activate subdomains here
+
+sudo certbot --apache -d sub.example.com
