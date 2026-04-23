@@ -14,6 +14,8 @@ Click Create records.
 
 Create sub domain folders using Putty
 
+mkdir /var/www/poker/
+
 	sudo chown -R ubuntu:mygrp /var/www/poker/
 	sudo chmod -R g+rwx /var/www/poker/
 	sudo systemctl restart apache2
