@@ -122,6 +122,17 @@ _my
 	sudo chmod -R g+rwx /var/www/poker/
 	sudo systemctl restart apache2
 
+OR THIS NEW
+
+	sudo groupadd mygrp
+	sudo usermod -a -G mygrp ubuntu
+	sudo usermod -a -G mygrp www-data
+
+sudo chown -R ubuntu:mygrp /var/www/poker
+sudo find /var/www/poker -type d -exec chmod 775 {} \;
+sudo find /var/www/poker -type f -exec chmod 664 {} \;
+sudo systemctl restart apache2
+
 >>>> PUTTY: Set access to folders for USERS to upload files
 	sudo chown -R www-data /var/www/poker/images or .PHPAPI
 	sudo chmod -R g+rwx /var/www/poker/images or .PHPAPI
