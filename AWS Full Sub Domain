@@ -43,11 +43,42 @@ sudo nano sub.example.com.conf
 
     ErrorLog ${APACHE_LOG_DIR}/one_error.log
     CustomLog ${APACHE_LOG_DIR}/one_access.log combined
-RewriteEngine on
-RewriteCond %{SERVER_NAME} =beta.test-all-in-statistics.pro
-RewriteRule ^ https://%{SERVER_NAME}%{REQUEST_URI} [END,NE,R=permanent]
+
+	RewriteEngine on
+	RewriteCond %{SERVER_NAME} =beta.test-all-in-statistics.pro
+	RewriteRule ^ https://%{SERVER_NAME}%{REQUEST_URI} [END,NE,R=permanent]
+
 </VirtualHost>
 
+OR USE THIS 
+
+<VirtualHost *:80>
+
+    ServerName mps.test-all-in-statistics.pro
+    DocumentRoot /var/www/mps
+
+    <Directory /var/www/mps>
+        Options Indexes FollowSymLinks
+        AllowOverride All
+        Require all granted
+    </Directory>
+
+    RewriteEngine On
+
+    # Serve real files/directories normally
+    RewriteCond %{REQUEST_FILENAME} -f
+    RewriteRule ^ - [L]
+
+    RewriteCond %{REQUEST_FILENAME} -d
+    RewriteRule ^ - [L]
+
+    # React fallback
+    FallbackResource /index.html
+
+    ErrorLog ${APACHE_LOG_DIR}/mps_error.log
+    CustomLog ${APACHE_LOG_DIR}/mps_access.log combined
+
+</VirtualHost>
 
 sudo a2ensite sub.example.com.conf
 sudo systemctl restart apache2
