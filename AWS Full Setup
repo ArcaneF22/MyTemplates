@@ -105,6 +105,10 @@ sudo addgroup mygrp
 >>>> PUTTY: Create user group --> REGALIA-first
 sudo su -
 _my
+
+VIEW GROUPS
+getent group
+
 	>> Add users
 	sudo usermod -aG mygrp user_name
 		sudo usermod -aG mygrp ubuntu
