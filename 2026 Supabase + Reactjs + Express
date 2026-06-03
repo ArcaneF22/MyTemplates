@@ -129,18 +129,22 @@ STEP 5: Run of Supabse SQL Editor to allow INSERT/DELETE/UPDATE SQL Queries
           SECURITY DEFINER
           AS $$
           DECLARE
-            output jsonb;
+            row_data record;
+            result_data jsonb := '[]'::jsonb;
           BEGIN
           
-            EXECUTE query INTO output;
+            FOR row_data IN EXECUTE query LOOP
+              result_data := result_data || jsonb_build_array(to_jsonb(row_data));
+            END LOOP;
           
-            RETURN COALESCE(
-              output,
-              jsonb_build_object(
-                'status', 'success',
-                'message', 'Query executed',
-                'data', null
-              )
+            IF jsonb_array_length(result_data) = 1 AND result_data->0 ? 'result' THEN
+              RETURN result_data->0->'result';
+            END IF;
+          
+            RETURN jsonb_build_object(
+              'status', 'success',
+              'message', 'Query executed',
+              'data', result_data
             );
           
           EXCEPTION WHEN OTHERS THEN
