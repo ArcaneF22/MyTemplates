@@ -1,0 +1,155 @@
+npm install @supabase/supabase-js axios express
+
+*** SUPABASE : create database and tables and fields
+
+NOTE: 
+  ---> Disable table's RLS so you could connect freely without restriction, 
+  ---> Sample: Run a script to SQL Editor to only allow logged in users to have access to [ INSERT, UPDATE, DELETE, SELECT ]
+
+
+
+------- SETUP SUPABASE TO REACTJS
+
+STEP 1. Get supabase ANON and URL
+
+STEP 2. create file supabase-client.jsx
+
+      import { createClient } from '@supabase/supabase-js'
+      
+      const supa_url      = import.meta.env.VITE_SUPABASE_URL || ''
+      const supa_anon     = import.meta.env.VITE_SUPABASE_ANON_PUBLIC || ''
+      
+      export const supa_base = createClient(supa_url, supa_anon)
+
+STEP 3. Run on Supabase SQL Editor. This will enable SQL queries in javascript fetching component
+      
+      CREATE OR REPLACE FUNCTION run_sql(query TEXT)
+      RETURNS JSONB AS $$
+      DECLARE
+        result JSONB;
+      BEGIN
+        EXECUTE 'SELECT COALESCE(jsonb_agg(t), ''[]''::jsonb) FROM (' || query || ') t' INTO result;
+        RETURN result;
+      END;
+      $$ LANGUAGE plpgsql SECURITY DEFINER;
+
+STEP 4: Create api-user.jsx | Use this to fetch users
+      
+      import { supa_base } from "@/___api_supabase/supabase-client";
+      
+      export const useFetch_Users = async (filters = {}) => {
+          
+        let sql_query = `
+                          SELECT 
+                          us.id,
+                          us.id_role,
+                          us.status AS status_user,
+                          usp.nick_name,
+                          usp.first_name,
+                          usp.middle_name,
+                          usp.last_name,
+                          usp.birth_date,
+                          usp.status AS status_profile,
+                          usc.user_name,
+                          usc.hint,
+                          usc.status AS status_credential
+                          FROM users us
+                          LEFT JOIN users_profile usp ON us.id = usp.id_user
+                          LEFT JOIN users_credential usc ON us.id = usc.id_user
+                          WHERE 1=1
+                      `;
+          
+        if (filters.id_users && filters.id_users !== 'ALL' && filters.id_users.length > 0) {
+          const ids = filters.id_users.join(',');
+          sql_query += ` AND us.id IN (${ids})`;
+        }
+        
+        if (filters.nick_name && filters.nick_name !== 'ALL') {
+          sql_query += ` AND usp.nick_name = '${filters.nick_name}'`;
+        }
+      
+        if (filters.first_name && filters.first_name !== 'ALL') {
+          sql_query += ` AND usp.first_name ILIKE '%${filters.first_name}%'`;
+        }
+      
+        if (filters.user_name && filters.user_name !== 'ALL') {
+          sql_query += ` AND usc.user_name ILIKE '%${filters.user_name}%'`;
+        }
+      
+        if (filters.status !== undefined && filters.status !== null && filters.status !== 'ALL') {
+          sql_query += ` AND us.status = ${filters.status}`;
+        }
+        
+        sql_query += ` ORDER BY usp.nick_name DESC`;
+        
+        let attempts = 0;
+        let last_error = null;
+      
+        while (attempts < 3) {
+          try {
+            
+            attempts++;
+      
+            const { data, error } = await supa_base.rpc('run_sql', { query: sql_query });
+            
+            if (error) throw error;
+            
+            return {
+                        loading:          false,
+                        status:           'success',
+                        message:          `Successfully fetched ${data?.length || 0} users`,
+                        data:             data || [],
+                        setting:          filters,
+                        attempts:         attempts
+                    };
+      
+          } catch (err) {
+            last_error = err;
+      
+            if (attempts >= 3) {
+      
+              return {
+                          loading:        false,
+                          status:         'error',
+                          message:        last_error.message,
+                          data:           [],
+                          setting:        filters,
+                          attempts:       attempts
+                      };
+                      
+            }
+          }
+        }
+      };
+
+STEP 5: Run of Supabse SQL Editor to allow INSERT/DELETE/UPDATE SQL Queries
+          CREATE OR REPLACE FUNCTION api_run_sql(query text)
+          RETURNS jsonb
+          LANGUAGE plpgsql
+          SECURITY DEFINER
+          AS $$
+          DECLARE
+            output jsonb;
+          BEGIN
+          
+            EXECUTE query INTO output;
+          
+            RETURN COALESCE(
+              output,
+              jsonb_build_object(
+                'status', 'success',
+                'message', 'Query executed',
+                'data', null
+              )
+            );
+          
+          EXCEPTION WHEN OTHERS THEN
+          
+            RETURN jsonb_build_object(
+              'status', 'error',
+              'message', SQLERRM,
+              'data', null
+            );
+          
+          END;
+          $$;
